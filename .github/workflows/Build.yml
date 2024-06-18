@@ -32,7 +32,7 @@ jobs:
         echo "CommitCount=$(git rev-list --count $env:GITHUB_REF_NAME)" >> $env:GITHUB_ENV
 
     - name:  Config
-      run:   echo ::set-env name=DXSDK_DIR::$HOME/cache/
+      run:   echo "DXSDK_DIR=$HOME/cache/" >> $env:GITHUB_ENV
       shell: bash
     
     - name: Cache
