@@ -23,7 +23,9 @@ jobs:
     steps:
 
     - name: Clone repo and submodules
-      run: git clone --recurse-submodules https://github.com/${{github.repository}}.git .
+      run: |
+        git clone --recurse-submodules https://github.com/${{github.repository}}.git .
+        git clone --recurse-submodules https://github.com/crosire/reshade.git
 
     - name: Get current date, commit hash and count
       run: |
@@ -67,7 +69,7 @@ jobs:
       run: nuget restore ${{env.Solution}}
 
     - name: Build
-      run: msbuild /m ${{env.Solution}} /p:IncludePath="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include"
+      run: msbuild /m ${{env.Solution}} /p:IncludePath="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /p:IncludePath="${{github.workspace}}/reshade/include"
       #run: msbuild /m /p:Configuration="${{env.Configuration}}" /p:Platform="${{env.Platform}}" ${{env.Solution}}
 
     - name: Upload Installer Artifact to GitHub
