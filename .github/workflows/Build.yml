@@ -69,7 +69,7 @@ jobs:
       run: nuget restore ${{env.Solution}}
 
     - name: Build
-      run: msbuild /m ${{env.Solution}} /p:AdditionalIncludePaths="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;${{github.workspace}}/../../reshade/include"
+      run: msbuild /m ${{env.Solution}} /p:IncludePaths="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;${{github.workspace}}/../../reshade/include"
       #run: msbuild /m /p:Configuration="${{env.Configuration}}" /p:Platform="${{env.Platform}}" ${{env.Solution}}
 
     - name: Upload Installer Artifact to GitHub
