@@ -35,7 +35,6 @@ jobs:
 
     - name:  Config
       run:   echo "DXSDK_DIR=%APPDATA%/cache/DXSDK/" >> $env:GITHUB_ENV
-      shell: bash
     
     - name: Cache
       id:   cache
