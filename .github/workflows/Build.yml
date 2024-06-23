@@ -34,7 +34,7 @@ jobs:
         echo "CommitCount=$(git rev-list --count $env:GITHUB_REF_NAME)" >> $env:GITHUB_ENV
 
     - name:  Config
-      run:   echo "DXSDK_DIR=%APPDATA%/cache/DXSDK/" >> $env:GITHUB_ENV
+      run:   echo "DXSDK_DIR=%APPDATA%/cache/DXSDK" >> $env:GITHUB_ENV
     
     - name: Cache
       id:   cache
