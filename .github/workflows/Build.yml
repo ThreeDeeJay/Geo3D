@@ -34,22 +34,22 @@ jobs:
         echo "CommitCount=$(git rev-list --count $env:GITHUB_REF_NAME)" >> $env:GITHUB_ENV
 
     - name:  Config
-      run:   echo "DXSDK_DIR=$HOME/cache/" >> $env:GITHUB_ENV
+      run:   echo "DXSDK_DIR=%APPDATA%/cache/DXSDK/" >> $env:GITHUB_ENV
       shell: bash
     
     - name: Cache
       id:   cache
       uses: actions/cache@v1
       with:
-       path: ~/cache
-       key:  cache
+       path: "DXSDK_DIR=%APPDATA%/cache/DXSDK/"
+       key:  DXSDK
 
     - name: Get current date, commit hash and count
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o _DX2010_.exe
-        7z x _DX2010_.exe DXSDK/Include -o_DX2010_
-        7z x _DX2010_.exe DXSDK/Lib/x86 -o_DX2010_
-        mv _DX2010_/DXSDK $HOME/cache
+        curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o DXSDK_Jun10.exe
+        7z x DXSDK_Jun10.exe DXSDK/Include -o${{env.DXSDK_DIR}}/Include
+        7z x DXSDK_Jun10.exe DXSDK/Lib/x86 -o${{env.DXSDK_DIR}}/Lib/x86
         rm -fR _DX*_ _DX*_.exe
       shell: bash
 
