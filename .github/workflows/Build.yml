@@ -81,9 +81,11 @@ jobs:
     - name: Build
       run: |
         (Get-Item .).FullName
-        msbuild /m ${{env.Solution}} /p:IncludePaths="${{env.DXSDK_DIR}}\Include;${{github.workspace}}" /p:AdditionalIncludePaths="${{github.workspace}}\..\..\reshade\include"
+        msbuild /m ${{env.Solution}}
         (Get-Item .).FullName
       #run: msbuild /m /p:Configuration="${{env.Configuration}}" /p:Platform="${{env.Platform}}" ${{env.Solution}}
+
+# /p:IncludePaths="${{env.DXSDK_DIR}}\Include" /p:AdditionalIncludePaths="${{github.workspace}}\..\..\reshade\include"
 
     - name: Upload Installer Artifact to GitHub
       uses: actions/upload-artifact@v2
