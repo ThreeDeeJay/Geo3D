@@ -48,6 +48,11 @@ jobs:
       run: |
         curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o DXSDK_Jun10.exe
         7z x DXSDK_Jun10.exe DXSDK/Include
+        7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\Geo3D
+        7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\D3D_Shaders
+        7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\Include
+        7z x DXSDK_Jun10.exe DXSDK/Include -oC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include
+        7z x DXSDK_Jun10.exe DXSDK/Include -oC:\Program Files (x86)\Microsoft DirectX SDK\Include
         ls -R
       shell: bash
 
