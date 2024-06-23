@@ -64,9 +64,6 @@ jobs:
         Write-Host "Installing..."
         $installPath = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
         cmd /c start /wait $exePath /P $installPath /U
-        Add-Path $installPath
-        Add-SessionPath $installPath
-        Remove-Item $exePath
         Write-Host "Installed" -ForegroundColor Green
 
 #        Invoke-WebRequest https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -OutFile DXSDK_Jun10.exe
