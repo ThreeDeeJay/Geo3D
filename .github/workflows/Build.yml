@@ -51,8 +51,6 @@ jobs:
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\Geo3D
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\D3D_Shaders
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\Include
-        7z x DXSDK_Jun10.exe DXSDK/Include -oC:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include
-        7z x DXSDK_Jun10.exe DXSDK/Include -oC:\Program Files (x86)\Microsoft DirectX SDK\Include
         ls -R
       shell: bash
 
