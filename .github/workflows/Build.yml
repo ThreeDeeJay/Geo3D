@@ -51,10 +51,10 @@ jobs:
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\Geo3D
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\D3D_Shaders
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{github.workspace}}\Include
-        7z x DXSDK_Jun10.exe DXSDK/Lib\x86
-        7z x DXSDK_Jun10.exe DXSDK/Lib\x86 -o${{github.workspace}}\Geo3D
-        7z x DXSDK_Jun10.exe DXSDK/Lib\x86 -o${{github.workspace}}\D3D_Shaders
-        7z x DXSDK_Jun10.exe DXSDK/Lib\x86 -o${{github.workspace}}\Include
+        7z x DXSDK_Jun10.exe DXSDK/Lib/x86
+        7z x DXSDK_Jun10.exe DXSDK/Lib/x86 -o${{github.workspace}}\Geo3D
+        7z x DXSDK_Jun10.exe DXSDK/Lib/x86 -o${{github.workspace}}\D3D_Shaders
+        7z x DXSDK_Jun10.exe DXSDK/Lib/x86 -o${{github.workspace}}\Include
         ls -R
       shell: bash
 
@@ -88,7 +88,7 @@ jobs:
     - name: Build
       run: |
         (Get-Item .).FullName
-        msbuild /m ${{env.Solution}}
+        msbuild /m ${{env.Solution}} /p:AdditionalIncludePaths="${{github.workspace}}\Include" /p:AdditionalLibPaths="${{github.workspace}}\Include" 
         (Get-Item .).FullName
       #run: msbuild /m /p:Configuration="${{env.Configuration}}" /p:Platform="${{env.Platform}}" ${{env.Solution}}
 
