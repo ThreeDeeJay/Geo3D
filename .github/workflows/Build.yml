@@ -53,6 +53,10 @@ jobs:
 #             rm -fR _DX*_ _DX*_.exe
 #      shell: bash
 
+    - uses: GuillaumeFalourd/setup-windows10-sdk-action@v2
+      with:
+        sdk-version: 16299
+
     - name: Install DirectX SDK
       shell: powershell
       run: |
