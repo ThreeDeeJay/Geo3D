@@ -14,6 +14,7 @@
 #include <d3d12.h>
 #include <d3d11.h>
 #include <d3d10.h>
+#include "D3DX9Shader.h"
 #include <d3d9.h>
 #include <regex>
 #include <mutex>
