@@ -33,42 +33,47 @@ jobs:
         echo "CommitHashShort=$(git rev-parse --short=7 HEAD)" >> $env:GITHUB_ENV
         echo "CommitCount=$(git rev-list --count $env:GITHUB_REF_NAME)" >> $env:GITHUB_ENV
 
-#    - name:  Config
-#      run:   echo "DXSDK_DIR=$HOME/cache/" >> $env:GITHUB_ENV
-#      shell: bash
-#    
-#    - name: Cache
-#      id:   cache
-#      uses: actions/cache@v1
-#      with:
-#       path: ~/cache
-#       key:  cache
-#    
-#    - name:  Cache create
-#      if:    steps.cache.outputs.cache-hit != 'true'
-#      run:   |
-#             curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o _DX2010_.exe
-#             7z x _DX2010_.exe DXSDK/Include -o_DX2010_
-#             7z x _DX2010_.exe DXSDK/Lib/x86 -o_DX2010_
-#             mv _DX2010_/DXSDK $HOME/cache
-#             rm -fR _DX*_ _DX*_.exe
-#      shell: bash
-
-    - name: Install DirectX SDK
-      shell: powershell
+    - name:  Config
+      run:   echo "DXSDK_DIR=$HOME/cache/" >> $env:GITHUB_ENV
+      shell: bash
+    
+    - name: Cache
+      id:   cache
+      uses: actions/cache@v1
+      with:
+       path: ~/cache
+       key:  cache
+    
+    - name: Cache create
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        Write-Host "DirectX Software Development Kit..." -ForegroundColor Cyan
-        Write-Host "Downloading..."
-        $exePath = "$env:temp\DXSDK_Jun10.exe"
-        (New-Object Net.WebClient).DownloadFile('https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe', $exePath)
-        Write-Host "Installing..."
-        $installPath = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
-        cmd /c start /wait $exePath /P $installPath /U
-        Write-Host "Installed" -ForegroundColor Green
+        curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o _DX2010_.exe
+        7z x _DX2010_.exe DXSDK/Include -o_DX2010_
+        7z x _DX2010_.exe DXSDK/Lib/x86 -o_DX2010_
+        mv _DX2010_/DXSDK $HOME/cache
+        rm -fR _DX*_ _DX*_.exe
+        echo "CommitCount=$(git rev-list --count $env:GITHUB_REF_NAME)" >> $env:GITHUB_ENV
+			shell: bash
+
+#    - name: Install DirectX SDK
+#      shell: powershell
+#      run: |
+#        Write-Host "DirectX Software Development Kit..." -ForegroundColor Cyan
+#        Write-Host "Downloading..."
+#        $exePath = "$env:temp\DXSDK_Jun10.exe"
+#        (New-Object Net.WebClient).DownloadFile('https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe', $exePath)
+#        Write-Host "Installing..."
+#        $installPath = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
+#        cmd /c start /wait $exePath /P $installPath /U
+#        Write-Host "Installed" -ForegroundColor Green#
 
 #        Invoke-WebRequest https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -OutFile DXSDK_Jun10.exe
 #        Start-Process -Wait DXSDK_Jun10.exe -ArgumentList '/U', '/P "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"'
 #        $env:PATH += ";C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include"
+
+
+
+
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
@@ -78,7 +83,7 @@ jobs:
       run: nuget restore ${{env.Solution}}
 
     - name: Build
-      run: msbuild /m ${{env.Solution}} /p:IncludePaths="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /p:AdditionalIncludePaths="${{github.workspace}}\..\..\reshade\include"
+      run: msbuild /m ${{env.Solution}} /p:IncludePaths="$HOME\cache\Include" /p:AdditionalIncludePaths="${{github.workspace}}\..\..\reshade\include"
       #run: msbuild /m /p:Configuration="${{env.Configuration}}" /p:Platform="${{env.Platform}}" ${{env.Solution}}
 
     - name: Upload Installer Artifact to GitHub
