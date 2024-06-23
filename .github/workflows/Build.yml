@@ -50,6 +50,7 @@ jobs:
         7z x DXSDK_Jun10.exe DXSDK/Include -o${{env.DXSDK_DIR}}/Include
         7z x DXSDK_Jun10.exe DXSDK/Lib/x86 -o${{env.DXSDK_DIR}}/Lib/x86
         rm -fR _DX*_ _DX*_.exe
+        ls "${{env.DXSDK_DIR}}/Include"
       shell: bash
 
 #    - name: Install DirectX SDK
