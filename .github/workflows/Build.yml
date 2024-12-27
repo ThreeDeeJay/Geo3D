@@ -1,7 +1,7 @@
 name: Build
 
 env:
-  Solution: .
+  Solution: ${{github.event.repository.name}}.sln
   Platform: #Any CPU|Win32|x64
   Configuration: Release
   Artifacts: build/$Configuration
